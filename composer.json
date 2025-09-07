@@ -1,0 +1,60 @@
+{
+  "name": "lightphpf/core",
+  "description": "LightPHPF framework core",
+  "type": "package",
+  "version": "1.0.0",
+  "keywords": [
+    "framework",
+    "lightphpf"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Soulaimane yahya",
+      "email": "soulaimaneyahya1@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "LightPHPF\\Core\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "LightPHPF\\Core\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "composer-dump": "composer dump-autoload --optimize",
+    "php-fixer": [
+      "./vendor/bin/phpcs --standard=PSR12 --encoding=utf-8 --extensions=php src/Application/*",
+      "./vendor/bin/phpcs --standard=PSR12 --encoding=utf-8 --extensions=php src/Bootstrap/*",
+      "./vendor/bin/phpcs --standard=PSR12 --encoding=utf-8 --extensions=php src/Http/*",
+      "./vendor/bin/phpcs --standard=PSR12 --encoding=utf-8 --extensions=php src/Console/*"
+    ],
+    "php-cs-fixer": [
+      "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes"
+    ]
+  },
+  "require": {
+    "php": "^8.2|^8.3",
+    "symfony/var-dumper": "^5.0",
+    "vlucas/phpdotenv": "^5.5",
+    "twig/twig": "^3.5"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.7",
+    "friendsofphp/php-cs-fixer": "dev-master"
+  },
+  "bin": [
+    "bin/lightphpf"
+  ],
+  "minimum-stability": "dev",
+  "config": {
+    "optimize-autoloader": true
+  },
+  "support": {
+    "issues": "https://github.com/lightphpf/core/issues",
+    "source": "https://github.com/lightphpf/core"
+  }
+}
