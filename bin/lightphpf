@@ -3,9 +3,9 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
 
-use LightPHPF\Console\ConsoleApplication;
+use LightPHPF\Core\Console\ConsoleApplication;
 
 /**
  * @details Run the console application
