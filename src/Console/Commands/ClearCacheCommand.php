@@ -14,7 +14,7 @@ final class ClearCacheCommand
     public function __construct()
     {
         // Get the location of the cache directory
-        $this->cacheDir = dirname(dirname(__FILE__)) . '/Bootstrap/Cache';
+        $this->cacheDir = dirname(dirname(__FILE__)) . '/../../../../../app/Bootstrap/Cache';
     }
 
     /**
