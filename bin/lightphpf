@@ -1,9 +1,14 @@
 #!/usr/bin/env php
 <?php
 
-declare(strict_types=1);
+$projectVendor = __DIR__ . '/../../../autoload.php';
 
-require __DIR__ . '/../../../vendor/autoload.php';
+if (!file_exists($projectVendor)) {
+    fwrite(STDERR, "Autoloader not found at $projectVendor\n");
+    exit(1);
+}
+
+require $projectVendor;
 
 use LightPHPF\Core\Console\ConsoleApplication;
 
