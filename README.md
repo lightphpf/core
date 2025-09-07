@@ -9,7 +9,7 @@
 ## install requirements
 
 ```sh
-composer require lightphpf/core
+composer require lightphpf/core:dev-main --dev
 ```
 
 ---

@@ -8,18 +8,20 @@ use Twig\Environment;
 
 class BaseController
 {
-    private $config;
-    protected $twig;
-    protected $app_name;
-    protected $app_url;
+    private array $config;
+    protected Environment $twig;
+    protected string $appName;
+    protected string $appUrl;
+    protected string $appRoot;
 
     public function __construct(array $config, Environment $twig)
     {
         $this->twig = $twig;
         $this->config = $config;
 
-        $this->app_name = $config['app_name'];
-        $this->app_url = $config['app_url'];
+        $this->appName = $config['app_name'];
+        $this->appUrl = $config['app_url'];
+        $this->appRoot = $config['app_root'];
     }
 
     /**
@@ -39,10 +41,10 @@ class BaseController
      */
     public function view(string $view, array $data = []): void
     {
-        $data['app_name'] = $this->config['app_name'];
-        $data['app_root'] = $this->config['app_root'];
+        $data['app_name'] = $this->appName;
+        $data['app_root'] = $this->appRoot;
 
-        if (file_exists($data['app_root'] . "/Views/{$view}.php")) {
+        if (file_exists($this->appRoot . "/Views/{$view}.php")) {
             require_once __DIR__ . '/../Views/' . $view . '.php';
         } else {
             dump("View does not exists.");
