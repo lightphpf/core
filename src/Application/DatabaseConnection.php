@@ -8,6 +8,8 @@ use PDO;
 
 final class DatabaseConnection
 {
+    private static ?self $instance = null;
+
     private readonly string $id;
     private readonly string $host;
     private readonly int $port;
@@ -17,7 +19,7 @@ final class DatabaseConnection
     private readonly string $password;
 
     private ?PDO $pdo = null;
-    private readonly \PDOStatement|bool $statement;
+    private \PDOStatement|bool $statement;
 
     public function __construct(array $config)
     {
@@ -30,8 +32,31 @@ final class DatabaseConnection
 
         // Generate a unique ID for each connection
         $this->id = uniqid(uniqid('conn_', true));
+        dump("connection id: {$this->id}");
 
         $this->connect();
+    }
+
+    /**
+     * @details Private __clone to prevent cloning
+     * 
+     * @return void
+     */
+    private function __clone(): void
+    {
+    }
+
+    /**
+     * @param  array $config
+     * @return self
+     */
+    public static function getInstance(array $config): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new self($config);
+        }
+
+        return self::$instance;
     }
 
     /**
@@ -71,13 +96,13 @@ final class DatabaseConnection
     }
 
     /**
-     * @param  $parameter
-     * @param  $value
-     * @param  $type
+     * @param  int|string $parameter
+     * @param  mixed $value
+     * @param  ?int $type
      *
      * @return void
      */
-    public function bind($parameter, $value, $type = null): void
+    public function bind(int|string $parameter, mixed $value, ?int $type = null): void
     {
         switch (is_null($type)) {
             case is_int($value):
@@ -99,7 +124,7 @@ final class DatabaseConnection
     /**
      * @return bool
      */
-    public function execute()
+    public function execute(): bool
     {
         return $this->statement->execute();
     }
@@ -109,26 +134,28 @@ final class DatabaseConnection
      */
     public function resultSet(): array
     {
-        $this->execute();
-
         return $this->statement->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function single()
+    /**
+     * @return \stdClass
+     */
+    public function single(): \stdClass
     {
-        $this->execute();
-
         return $this->statement->fetch(PDO::FETCH_OBJ);
     }
 
     /**
      * @return int
      */
-    public function rowCount()
+    public function rowCount(): int
     {
         return $this->statement->rowCount();
     }
 
+    /**
+     * @return \PDO
+     */
     public function getPdo(): PDO
     {
         return $this->pdo;
