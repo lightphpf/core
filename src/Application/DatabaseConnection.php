@@ -39,7 +39,7 @@ final class DatabaseConnection
 
     /**
      * @details Private __clone to prevent cloning
-     * 
+     *
      * @return void
      */
     private function __clone(): void
